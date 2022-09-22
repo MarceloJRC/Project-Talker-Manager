@@ -18,10 +18,6 @@ const emailValidation = (req, res, next) => {
         return res.status(400).json({ message: error.message });
     }
     next();
-
-    //     if (emptyEmail(email)) throw new Error('O campo "email" é obrigatório');
-    //     if (!validEmail(email)) throw new Error('O "email" deve ter o formato "email@email.com"');
-    // next();
 };
 
 module.exports = emailValidation;
