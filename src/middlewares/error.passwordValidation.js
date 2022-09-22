@@ -1,5 +1,5 @@
 const emptyPassword = (password) => {
-    if (!password || password === '' || password === null) {
+    if (!password) {
         return true;
     }
     return false;
@@ -7,9 +7,9 @@ const emptyPassword = (password) => {
 
 const validPassword = (password) => {
     if (password.length < 6) {
-        return true;
+        return false;
     }
-    return false;
+    return true;
 };
 
 const passwordValidation = (req, res, next) => {
