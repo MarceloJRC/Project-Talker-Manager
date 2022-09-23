@@ -47,7 +47,8 @@ const emptyRate = (rate) => {
 };
 
 const validRate = (rate) => {
-    if (rate % 1 === 0 && rate < 6 && rate > 0) {
+    console.log(rate);
+    if (rate < 6 && rate > 0) {
         return true;
     }
     return false;

@@ -15,14 +15,14 @@ const OK = 200;
 const NOT_FOUND = 404;
 
 talkerRoute.get('/', async (req, res) => {
-    const result = await readFileTalker();
-    return res.status(OK).json(result);
+    const talkerData = await readFileTalker();
+    return res.status(OK).json(talkerData);
 });
 
 talkerRoute.get('/:id', async (req, res) => {
     const { id } = req.params;
-    const result = await readFileTalker();
-    const resultById = result.find((objTalker) => objTalker.id === Number(id));
+    const talkerData = await readFileTalker();
+    const resultById = talkerData.find((objTalker) => objTalker.id === Number(id));
 
     if (resultById) {
         return res.status(OK).json(resultById);
@@ -44,6 +44,42 @@ talkerRoute.post('/',
     talkerData.push(newTalker);
     await newTalkerFile(talkerData);
     res.status(201).json(newTalker);
+});
+
+talkerRoute.put('/:id',
+    tokenValidation,
+    nameValidation,
+    ageValidation,
+    talkValidate,
+    talkValidationWatchedAt,
+    talkValidationRate,
+    async (req, res) => {
+    const { id } = req.params;
+    const { name, age, talk } = req.body;
+    const talkerData = await readFileTalker();
+    let updatedTalker;
+
+    for (let i = 0; i < talkerData.length; i += 1) {
+        const talker = talkerData[i];
+
+        if (talker.id === Number(id)) {
+            talker.name = name;
+            talker.age = age;
+            talker.talk = talk;
+            updatedTalker = talker;
+        }
+    }
+
+    res.status(200).json({ updatedTalker });
+});
+
+talkerRoute.delete('/:id', tokenValidation, async (req, res) => {
+    const { id } = req.params;
+    const talkerData = await readFileTalker();
+    const talkerPosition = talkerData.findIndex((talker) => talker.id === Number(id));
+    talkerData.splice(talkerPosition, 1);
+
+    res.status(200).end();
 });
 
 module.exports = talkerRoute;
