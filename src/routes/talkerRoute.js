@@ -57,6 +57,7 @@ talkerRoute.put('/:id',
     const { id } = req.params;
     const { name, age, talk } = req.body;
     const talkerData = await readFileTalker();
+    const newUpdateTalker = talkerData.findIndex((talker) => talker.id === Number(id));
     let updatedTalker;
 
     for (let i = 0; i < talkerData.length; i += 1) {
@@ -69,7 +70,7 @@ talkerRoute.put('/:id',
             updatedTalker = talker;
         }
     }
-
+    await newTalkerFile(newUpdateTalker);
     res.status(200).json({ updatedTalker });
 });
 
@@ -78,8 +79,8 @@ talkerRoute.delete('/:id', tokenValidation, async (req, res) => {
     const talkerData = await readFileTalker();
     const talkerPosition = talkerData.findIndex((talker) => talker.id === Number(id));
     talkerData.splice(talkerPosition, 1);
-
-    res.status(200).end();
+    await newTalkerFile(talkerPosition);
+    res.status(204).end();
 });
 
 module.exports = talkerRoute;
