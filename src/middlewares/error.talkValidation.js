@@ -40,14 +40,13 @@ const talkValidationWatchedAt = (req, res, next) => {
 };
 
 const emptyRate = (rate) => {
-    if (!rate) {
+    if (rate === null || rate === undefined) {
         return true;
     }
     return false;
 };
 
 const validRate = (rate) => {
-    console.log(rate);
     if (rate < 6 && rate >= 1) {
         return true;
     }
