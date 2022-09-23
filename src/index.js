@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const errorMiddleware = require('./middlewares/error.middleware');
+// const errorMiddleware = require('./middlewares/error.middleware');
 const emailValidation = require('./middlewares/error.emailValidation');
 const passwordValidation = require('./middlewares/error.passwordValidation');
 const talkerRoute = require('./routes/talkerRoute');
@@ -26,4 +26,4 @@ app.use('/login', loginRoute);
 
 app.use(emailValidation);
 app.use(passwordValidation);
-app.use(errorMiddleware);
+// app.use(errorMiddleware);

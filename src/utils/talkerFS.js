@@ -8,8 +8,12 @@ const readFileTalker = async () => {
         const talkers = JSON.parse(response);
         return talkers;
     } catch (error) {
-        console.log(`Erro: ${error}`);
+        return (`Erro: ${error}`);
     }
 };
 
-module.exports = { readFileTalker };
+const newTalkerFile = async (newTalkers) => {
+    await fs.writeFile(fileName, JSON.stringify(newTalkers));
+};
+
+module.exports = { readFileTalker, newTalkerFile };
