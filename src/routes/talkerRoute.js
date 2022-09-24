@@ -19,10 +19,20 @@ talkerRoute.get('/', async (req, res) => {
     return res.status(OK).json(talkerData);
 });
 
+talkerRoute.get('/search', tokenValidation, async (req, res) => {
+    const { q } = req.query;
+    const talkerData = await readFileTalker();
+    const searchTalker = talkerData.filter((talker) => talker.name.includes(q));
+    if (!q) { 
+        return res.status(200).json(talkerData);
+    }
+    return res.status(200).json(searchTalker);
+});
+
 talkerRoute.get('/:id', async (req, res) => {
     const { id } = req.params;
     const talkerData = await readFileTalker();
-    const resultById = talkerData.find((objTalker) => objTalker.id === Number(id));
+    const resultById = talkerData.find((talker) => talker.id === Number(id));
 
     if (resultById) {
         return res.status(OK).json(resultById);
